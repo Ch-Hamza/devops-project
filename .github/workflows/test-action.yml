@@ -1,0 +1,27 @@
+name: Jobs project CI
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+
+    name: Test project
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Run project in background and run tests
+        run: |
+          npm run start &
+          sleep 15
+          npm run test
