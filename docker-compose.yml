@@ -33,11 +33,10 @@ services:
     image: hamzachebil/devops-project
     ports:
       - 8000:8000
-    restart: unless-stopped
     networks:
       - app
     deploy:
-      replicas: 3
+      replicas: 5
 
 volumes:
   prometheus-data:
