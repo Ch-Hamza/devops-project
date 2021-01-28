@@ -42,8 +42,7 @@ router
             res.status(204).send(null);
         }
     })
-    .get("/hello", (req, res) => {
-        // Put { hello: "world" } in the body response
+    .get("/", (req, res) => {
         res.send(JSON.stringify({ hello: "world" }));
     });
 
