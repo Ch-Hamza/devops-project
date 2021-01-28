@@ -41,7 +41,7 @@ services:
       replicas: 5
       update_config:
         parallelism: 1
-        delay: 10
+        delay: '10s'
 
 volumes:
   prometheus-data:
