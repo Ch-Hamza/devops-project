@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 
-const localURL = `${process.env.API_URL || "http://localhost:3111"}`;
+const localURL = `${process.env.API_URL || "http://localhost:8000"}`;
 const jobsURL = `${localURL}/jobs`;
 const jobURL = `${localURL}/job`;
 
@@ -10,7 +10,8 @@ beforeEach(async () => {
   }).then((res) => res.text());
 });
 
-describe("Gymlib test suite", () => {
+describe("Unit test suite", () => {
+
   it("should handle multiple insertions", async () => {
     const insert1 = await fetch(jobsURL, {
       method: "post",
