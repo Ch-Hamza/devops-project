@@ -1,2 +1,2 @@
-node_modules/
-solution.js
+server/node_modules/
+server/coverage/
