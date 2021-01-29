@@ -23,7 +23,11 @@ After running the container you can check these ports:
 |8000|Node application|
 |9090|Prometheus|
 |3000|Graphana|
-##Architechture
+## Architechture
+
+## Deployment strategy
+We used rolling update strategy for this project with a delay of 10s between replicas.
+
 ## CI/CD
 ### CI
 * Install dependencies
