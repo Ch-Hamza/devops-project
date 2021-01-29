@@ -8,7 +8,6 @@ prom.collectDefaultMetrics();
 const totalHttpRequests = new prom.Counter({
     name: 'custom_requests_total',
     help: 'total http requests',
-    labelNames: ['NODE_APP_INSTANCE']
 });
 prom.register.registerMetric(totalHttpRequests);
 
