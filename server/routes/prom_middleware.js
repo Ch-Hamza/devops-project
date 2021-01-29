@@ -3,13 +3,12 @@ const router = express.Router();
 
 const prom = require("prom-client");
 
-prom.collectDefaultMetrics({
-    labels: { NODE_APP_INSTANCE: 'devops-project' },
-});
+prom.collectDefaultMetrics();
 
 const totalHttpRequests = new prom.Counter({
     name: 'custom_requests_total',
-    help: 'total http requests'
+    help: 'total http requests',
+    labelNames: ['NODE_APP_INSTANCE']
 });
 prom.register.registerMetric(totalHttpRequests);
 
