@@ -8,6 +8,11 @@ prom.collectDefaultMetrics({
     register
 });
 
+router.get('/metrics', async (_req, res) => {
+    res.set('Content-Type', prom.register.contentType);
+    res.end(await register.metrics());
+});
+
 // const totalJobsInQueue = new prom.Counter({
 //     name: 'custom_total_jobs',
 //     help: 'total jobs in queue'
