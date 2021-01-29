@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const {increaseJobsInQueue, decreaseJobsInQueue, clearQueue} = require('./prom_middleware');
 /**
  * Routes:
  *  GET /jobs
@@ -26,18 +26,21 @@ router
             res.status(400);
         } else if (!jobs.includes(input)) {
             jobs.unshift(input);
+            increaseJobsInQueue();
         }
         res.send(jobs);
     })
 
     .delete("/jobs", (req, res) => {
         jobs = [];
+        clearQueue();
         res.status(204).send(null);
     })
 
     .get("/job", (req, res) => {
         if(jobs.length !== 0) {
             res.send(JSON.stringify(jobs.pop()));
+            decreaseJobsInQueue();
         } else {
             res.status(204).send(null);
         }

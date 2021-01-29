@@ -9,7 +9,12 @@ const app_routes = require('./routes/app_routes');
 router.use(app_routes);
 
 const prom_routes = require('./routes/prom_middleware');
-router.use(prom_routes);
+router.use(prom_routes.router);
+
+router.use((req, res, next) => {
+    prom_routes.increaseTotalHttpRequests();
+    next();
+});
 
 app.use(router);
 app.listen(8000);
