@@ -61,7 +61,7 @@ jobs:
       - name: Deploy to server
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: sudo docker stack deploy --compose-file docker-compose.yml devops
+          command: cd /home/ubuntu/devops-project; sudo docker stack deploy --compose-file docker-compose.yml devops
           host: ${{ secrets.DEPLOY_HOST }}
           username: ubuntu
           privateKey: ${{ secrets.AWS_PEM }}
