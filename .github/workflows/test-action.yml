@@ -30,8 +30,12 @@ jobs:
           sleep 5
         working-directory: server
 
-      - name: Run tests
-        run: npm run test
+      - name: Run integration tests
+        run: npm run test -- index.test.js && npm run test -- job_tests.test.js
+        working-directory: server/tests
+
+      - name: Run coverage tests
+        run: npm run coverage
         working-directory: server
 
   docker:
@@ -58,6 +62,11 @@ jobs:
       - name: Publish Docker image
         run: docker push ${{ secrets.DOCKER_REPO }}:latest
 
+  deploy:
+    name: Deploy latest image
+    runs-on: ubuntu-latest
+    needs: [ docker ]
+    steps:
       - name: Deploy to server
         uses: garygrossgarten/github-action-ssh@release
         with:
@@ -65,3 +74,8 @@ jobs:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ubuntu
           privateKey: ${{ secrets.AWS_PEM }}
+
+
+
+
+

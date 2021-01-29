@@ -2,31 +2,34 @@ const express = require('express');
 const router = express.Router();
 
 const prom = require("prom-client");
+const register = new prom.Registry();
 
-prom.collectDefaultMetrics();
+prom.collectDefaultMetrics({
+    register
+});
 
 const totalHttpRequests = new prom.Counter({
     name: 'custom_requests_total',
     help: 'total http requests',
 });
-prom.register.registerMetric(totalHttpRequests);
+register.registerMetric(totalHttpRequests);
 
 const totalJobsInQueue = new prom.Counter({
     name: 'custom_total_jobs',
     help: 'total jobs in queue'
 });
-prom.register.registerMetric(totalJobsInQueue);
+register.registerMetric(totalJobsInQueue);
 
 const durationHist = new prom.Histogram({
     name: 'custom_requests_duration',
     help: 'duration histogram of http responses',
     buckets: [0.003, 0.03, 0.1, 0.3, 1.5, 10],
 });
-prom.register.registerMetric(durationHist);
+register.registerMetric(durationHist);
 
 router.get('/metrics', async (_req, res) => {
     res.set('Content-Type', prom.register.contentType);
-    res.end(await prom.register.metrics());
+    res.end(await register.metrics());
 });
 
 
