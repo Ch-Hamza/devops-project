@@ -59,4 +59,9 @@ jobs:
         run: docker push ${{ secrets.DOCKER_REPO }}:latest
 
       - name: Deploy to server
-        run: cat "${{ secrets.AWS_PEM }}" ~/key >  ssh -i ~/key "sudo docker stack deploy --compose-file docker-compose.yml devops"
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: sudo docker stack deploy --compose-file docker-compose.yml devops
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ubuntu
+          privateKey: ${{ secrets.AWS_PEM }}
