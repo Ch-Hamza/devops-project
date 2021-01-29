@@ -28,11 +28,13 @@ After running the container you can check these ports:
 |----|---|
 |8000|Node application|
 |9090|Prometheus|
-|3000|Graphana|
+|3000|Grafana|
 ## Architechture
 We use EC2 as nodes in the docker swarm setup, the replicas specified in the deployment stack is distributed randomly among nodes.
 ![arch1](readme_pics/1_cXukk6ijtqSNNgueDa6B_g.png)
+
 We use another node to host monitoring apps and data.
+
 ![arch2](readme_pics/Captureaaa.PNG)
 ## Deployment strategy
 For deployment, we use the "Rolling Update" strategy to allow updates to take place with 
