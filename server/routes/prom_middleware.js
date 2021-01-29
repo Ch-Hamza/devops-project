@@ -14,8 +14,8 @@ const totalHttpRequests = new prom.Counter({
 prom.register.registerMetric(totalHttpRequests);
 
 const totalJobsInQueue = new prom.Counter({
-    name: 'custom_total_tasks',
-    help: 'total tasks in queue'
+    name: 'custom_total_jobs',
+    help: 'total jobs in queue'
 });
 prom.register.registerMetric(totalJobsInQueue);
 
