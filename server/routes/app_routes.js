@@ -42,8 +42,8 @@ router
         if(jobs.length !== 0) {
             const timer = durationHist.startTimer();
             const job = getJob(jobs);
-            setTimeout(() => {}, Math.floor(Math.random() * 1000));
-            timer();
+            setTimeout(() => timer(), Math.floor(Math.random() * 1000));
+
             res.send(JSON.stringify(job));
         } else {
             res.status(204).send(null);
