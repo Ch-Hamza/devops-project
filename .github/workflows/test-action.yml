@@ -26,6 +26,7 @@ jobs:
 
       - name: Run unit tests
         run: npm run test -- unit_tests.test.js
+        working-directory: server
 
       - name: Run project in background
         run: |
