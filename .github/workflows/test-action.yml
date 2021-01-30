@@ -24,6 +24,9 @@ jobs:
         run: npm install
         working-directory: server
 
+      - name: Run unit tests
+        run: npm run test -- unit_tests.test.js
+
       - name: Run project in background
         run: |
           node index.js &
