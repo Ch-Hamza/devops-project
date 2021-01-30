@@ -40,7 +40,10 @@ router
 
     .get("/job", (req, res) => {
         if(jobs.length !== 0) {
+            const timer = durationHist.startTimer();
             const job = getJob(jobs);
+            setTimeout(() => {}, Math.floor(Math.random() * 1000));
+            timer();
             res.send(JSON.stringify(job));
         } else {
             res.status(204).send(null);
@@ -52,11 +55,8 @@ router
 
 function getJob(jobs_arr) {
     if(Array.isArray(jobs_arr)) {
-        const timer = durationHist.startTimer();
         increaseCompletedJobsInQueue();
         decreaseJobsInQueue();
-        setTimeout(() => {}, Math.floor(Math.random() * 1000));
-        durationHist.observe(timer());
         return jobs_arr.pop();
     } else {
         throw new TypeError('wrong type!');
