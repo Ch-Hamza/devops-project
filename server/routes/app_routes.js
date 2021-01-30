@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-// const {increaseJobsInQueue, decreaseJobsInQueue, clearQueue} = require('./prom_middleware');
+const { increaseJobsInQueue, increaseCompletedJobsInQueue, clearQueue, decreaseJobsInQueue, durationHist, increaseDeletedJobs } = require('./prom_middleware');
 /**
  * Routes:
  *  GET /jobs
@@ -25,19 +25,23 @@ router
         if (!Number.isInteger(input)) {
             res.status(400);
         } else if (!jobs.includes(input)) {
+            increaseJobsInQueue();
             jobs.unshift(input);
         }
         res.send(jobs);
     })
 
     .delete("/jobs", (req, res) => {
+        increaseDeletedJobs(jobs.length);
         jobs = [];
+        clearQueue();
         res.status(204).send(null);
     })
 
     .get("/job", (req, res) => {
         if(jobs.length !== 0) {
-            res.send(JSON.stringify(jobs.pop()));
+            const job = getJob(jobs);
+            res.send(JSON.stringify(job));
         } else {
             res.status(204).send(null);
         }
@@ -46,4 +50,17 @@ router
         res.send(JSON.stringify({ hello: "world" }));
     });
 
-module.exports = router;
+function getJob(jobs_arr) {
+    if(Array.isArray(jobs_arr)) {
+        const timer = durationHist.startTimer();
+        increaseCompletedJobsInQueue();
+        decreaseJobsInQueue();
+        setTimeout(() => {}, Math.floor(Math.random() * 1000));
+        durationHist.observe(timer());
+        return jobs_arr.pop();
+    } else {
+        throw new TypeError('wrong type!');
+    }
+}
+
+module.exports = {router, getJob};

@@ -10,7 +10,7 @@ beforeEach(async () => {
   }).then((res) => res.text());
 });
 
-describe("Unit test suite", () => {
+describe("Corner cases test suite", () => {
 
   it("should handle multiple insertions", async () => {
     const insert1 = await fetch(jobsURL, {
