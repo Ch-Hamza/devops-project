@@ -50,7 +50,7 @@ router
         }
     })
     .get("/", (req, res) => {
-        res.send(JSON.stringify({ hello: "world" }));
+        res.send(JSON.stringify({ hello: "hello world" }));
     });
 
 function getJob(jobs_arr) {
