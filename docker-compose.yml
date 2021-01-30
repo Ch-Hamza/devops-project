@@ -57,6 +57,10 @@ services:
     restart: unless-stopped
     volumes:
       - '/:/host:ro,rslave'
+    expose:
+      - 9100
+    networks:
+      - app
 
 volumes:
   prometheus-data:
